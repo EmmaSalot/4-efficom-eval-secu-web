@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const login = (req, res, next) => {
-    let user = User.getByEmail(req.body.email);
+    const user = User.getByEmail(req.body.email);
     if (!user) {
         return res.status(401).json({ message: "Login ou mot de passe incorrect" });
     }
