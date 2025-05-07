@@ -7,6 +7,8 @@ const messageRouter = require('./route/message.route.js');
 const roleRouter = require('./route/role.route.js');
 const {connect} = require('./framework/connection.js');
 const sync = require('./framework/sync.js');
+const log = require('./middleware/log.middleware.js');
+const logres = require('./middleware/logres.middleware.js');
 
 const ips = ['127.0.0.1'] //remplir avec les ips
 
@@ -17,8 +19,10 @@ const database = async () => {
 
 database();
 
-app.use(ipfilter(ips))
+app.use(ipfilter(ips));
 app.use(express.json());
+app.use(log);
+app.use(logres);
 
 app.use('/user',userRouter);
 app.use('/auth',authRouter);
