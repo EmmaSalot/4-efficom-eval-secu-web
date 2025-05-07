@@ -1,11 +1,14 @@
 const express = require('express');
 const app = express();
+const ipfilter = require('express-ipfilter').IpFilter
 const userRouter = require('./route/user.route.js');
 const authRouter = require('./route/auth.route.js');
 const messageRouter = require('./route/message.route.js');
 const roleRouter = require('./route/role.route.js');
 const {connect} = require('./framework/connection.js');
 const sync = require('./framework/sync.js');
+
+const ips = ['127.0.0.1'] //remplir avec les ips
 
 const database = async () => {
     await connect();
@@ -14,6 +17,7 @@ const database = async () => {
 
 database();
 
+app.use(ipfilter(ips))
 app.use(express.json());
 
 app.use('/user',userRouter);
